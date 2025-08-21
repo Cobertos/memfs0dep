@@ -15,15 +15,7 @@
   "exclude": ["src/__tests__", "node_modules", "lib", "es6", "es2020", "esm", "docs", "README.md"],
   "typedocOptions": {
     "entryPoints": [
-      "src/index.ts",
-      "src/cas/types.ts",
-      "src/crud/types.ts",
-      "src/crud-to-cas/index.ts",
-      "src/fsa/index.ts",
-      "src/fsa-to-crud/index.ts",
-      "src/fsa-to-node/index.ts",
-      "src/node-to-crud/index.ts",
-      "src/node-to-fsa/index.ts"
+      "src/index.ts"
     ],
     "out": "typedocs"
   }

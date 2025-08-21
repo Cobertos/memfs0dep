@@ -16,15 +16,7 @@
     "virtual",
     "test",
     "testing",
-    "mock",
-    "fsa",
-    "file system access",
-    "native file system",
-    "webfs",
-    "crudfs",
-    "opfs",
-    "casfs",
-    "content addressable storage"
+    "mock"
   ],
   "homepage": "https://github.com/Cobertos/memfs0dep",
   "repository": {
@@ -48,40 +40,19 @@
     "lib",
     "dist",
     "README.md",
-    "LICENSE",
-    "demo/runkit.js"
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p . && rimraf --glob lib/__tests__ 'lib/**/__tests__'",
     "build:webfs": "NODE_ENV=production webpack --config ./src/webfs/webpack.config.js",
-    "clean": "rimraf lib types typedocs gh-pages coverage",
-    "demo:crud-and-cas": "webpack serve --config ./demo/crud-and-cas/webpack.config.js",
-    "demo:fsa-to-node-sync-tests": "webpack serve --config ./demo/fsa-to-node-sync-tests/webpack.config.js",
-    "demo:fsa-to-node-zipfile": "webpack serve --config ./demo/fsa-to-node-zipfile/webpack.config.js",
-    "demo:git-fsa": "webpack serve --config ./demo/git-fsa/webpack.config.js",
-    "demo:git-opfs": "webpack serve --config ./demo/git-opfs/webpack.config.js",
-    "demo:webfs": "webpack serve --config ./src/webfs/webpack.config.js",
-    "prettier": "prettier --write .",
-    "prettier:check": "prettier --check .",
     "test": "jest --maxWorkers 2",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
-    "tslint": "tslint \"src/**/*.ts\" -t verbose",
     "typecheck": "tsc -p .",
     "watch": "watch \"npm run build\" ./src",
     "coverage": "yarn test --collectCoverage",
-    "typedoc": "npx typedoc@0.25.13 --tsconfig tsconfig.json",
+    "typedoc": "typedoc --tsconfig tsconfig.json",
     "build:pages": "npx rimraf@5.0.5 gh-pages && mkdir -p gh-pages && cp -r typedocs/* gh-pages && cp -r coverage gh-pages/coverage"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "git-cz"
-    }
   },
   "release": {
     "branches": [
@@ -116,21 +87,21 @@
     }
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^9.0.1",
-    "@types/mime": "^4.0.0",
+    "@semantic-release/npm": "^12.0.2",
     "@types/node": "^24.3.0",
     "jest": "^30.0.5",
     "semantic-release": "^24.2.7",
     "tslib": "^2.8.1",
-    "typescript": "^5.9.2"
+    "typedoc": "^0.28.10",
+    "typescript": "^5.9.2",
+    "@types/jest": "^30.0.0",
+    "ts-jest": "^29.4.1"
   },
   "engines": {
     "node": ">= 20.0.0"
   },
   "dependencies": {
-    "@types/jest": "^30.0.0",
-    "ts-jest": "^29.4.1"
   }
 }
