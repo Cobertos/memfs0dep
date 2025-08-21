@@ -7,6 +7,8 @@
 
 JavaScript in-memory fs for Node.js. No dependencies. No maintenance guarantees...
 
+This is forked from [memfs](https://github.com/streamich/memfs) with the dependencies removed
+
 ## Install
 
 ```shell
@@ -18,12 +20,6 @@ npm i memfs0dep
 - [In-memory Node.js `fs` API](./docs/node/index.md)
 <!-- - [Code reference](https://streamich.github.io/memfs/)
 - [Test coverage](https://streamich.github.io/memfs/coverage/lcov-report/) -->
-
-## See also
-
-- [`memfs`][memfs] - Original memfs
-
-[memfs]: https://github.com/streamich/memfs
 
 ## License
 
