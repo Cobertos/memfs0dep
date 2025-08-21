@@ -11,43 +11,43 @@ on:
       - next
 
 jobs:
-  prepare-yarn-cache:
-    name: Prepare yarn cache
-    runs-on: ubuntu-latest
+  # prepare-yarn-cache:
+  #   name: Prepare yarn cache
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: yarn
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: lts/*
+  #         cache: yarn
 
-      - name: Validate cache
-        env:
-          # Use PnP and disable postinstall scripts as this just needs to
-          # populate the cache for the other jobs
-          YARN_NODE_LINKER: pnp
-          YARN_ENABLE_SCRIPTS: false
-        run: yarn --immutable
+  #     - name: Validate cache
+  #       env:
+  #         # Use PnP and disable postinstall scripts as this just needs to
+  #         # populate the cache for the other jobs
+  #         YARN_NODE_LINKER: pnp
+  #         YARN_ENABLE_SCRIPTS: false
+  #       run: yarn --immutable
 
   typecheck:
-    needs: prepare-yarn-cache
+    # needs: prepare-yarn-cache
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: yarn
+          # cache: yarn
       - name: install
-        run: yarn
+        run: npm
       - name: run typecheck
-        run: yarn typecheck
+        run: npm typecheck
 
   test-node:
+    # needs: prepare-yarn-cache
     name: Test on Node.js v${{ matrix.node-version }}
-    needs: prepare-yarn-cache
     strategy:
       fail-fast: false
       matrix:
@@ -60,16 +60,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: yarn
+          # cache: yarn
       - name: install
-        run: yarn install
+        run: npm install
       - name: run tests
-        run: yarn test
+        run: npm test
         env:
           CI: true
   test-os:
+    # needs: prepare-yarn-cache
     name: Test on ${{ matrix.os }} using Node.js LTS
-    needs: prepare-yarn-cache
     strategy:
       fail-fast: false
       matrix:
@@ -81,11 +81,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-          cache: yarn
+          # cache: yarn
       - name: install
-        run: yarn install
+        run: npm install
       - name: run tests
-        run: yarn test
+        run: npm test
         env:
           CI: true
   # release:
