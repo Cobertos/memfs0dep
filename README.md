@@ -1,9 +1,9 @@
 # memfs0dep
 
-[![][npm-badge]][npm-url]
+<!-- [![][npm-badge]][npm-url]
 
 [npm-url]: https://www.npmjs.com/package/memfs0de
-[npm-badge]: https://img.shields.io/npm/v/memfs0dep.svg
+[npm-badge]: https://img.shields.io/npm/v/memfs0dep.svg -->
 
 JavaScript in-memory fs for Node.js. No dependencies. No maintenance guarantees...
 
