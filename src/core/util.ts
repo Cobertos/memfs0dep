@@ -63,7 +63,7 @@ export function validateFd(fd) {
   if (!isFd(fd)) throw TypeError(ERRSTR.FD);
 }
 
-export function dataToBuffer(data: TData, encoding: string = ENCODING_UTF8): Buffer {
+export function dataToBuffer(data: TData, encoding: BufferEncoding = ENCODING_UTF8): Buffer {
   if (Buffer.isBuffer(data)) return data;
   else if (data instanceof Uint8Array) return bufferFrom(data);
   else return bufferFrom(String(data), encoding);

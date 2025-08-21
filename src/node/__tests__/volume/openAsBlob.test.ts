@@ -1,5 +1,5 @@
-import { of } from 'thingies';
 import { memfs } from '../../../';
+import { of } from "./util";
 
 describe('.openAsBlob()', () => {
   it('can read a text file as blob', async () => {

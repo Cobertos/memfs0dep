@@ -50,7 +50,7 @@ describe('writeFileSync(path, data[, options])', () => {
     vol.chmodSync('/foo/test', 0o555); // rx
     expect(() => {
       vol.writeFileSync('/foo/test', 'test');
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
   });
 
   it('Write throws EACCES without sufficient permissions on containing directory', () => {
@@ -64,7 +64,7 @@ describe('writeFileSync(path, data[, options])', () => {
       vol.chmodSync('/foo', perm);
       expect(() => {
         vol.writeFileSync('/foo/test', 'test');
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
 
     // If the target file exists, it should not care about the write permission on containing dir
@@ -72,7 +72,7 @@ describe('writeFileSync(path, data[, options])', () => {
     vol.chmodSync('/foo', 0o555); // rx, should be enough
     expect(() => {
       vol.writeFileSync('/foo/test', 'test');
-    }).not.toThrowError();
+    }).not.toThrow(Error);
   });
 
   it('Write throws EACCES without sufficient permissions on intermediate directory', () => {
@@ -81,6 +81,6 @@ describe('writeFileSync(path, data[, options])', () => {
     vol.chmodSync('/', 0o666); // rw
     expect(() => {
       vol.writeFileSync('/foo/test', 'test');
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
   });
 });

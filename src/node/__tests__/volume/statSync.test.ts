@@ -32,7 +32,7 @@ describe('.statSync(...)', () => {
     vol.mkdirSync('/foo', { mode: 0o666 }); // rw
     expect(() => {
       vol.statSync('/foo/non-existent', { throwIfNoEntry: false });
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
   });
 
   it('throws EACCES when containing directory does not have sufficient permissions', () => {
@@ -41,12 +41,12 @@ describe('.statSync(...)', () => {
 
     expect(() => {
       vol.statSync('/foo/test');
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
 
     // Make sure permissions win out against throwIfNoEntry option:
     expect(() => {
       vol.statSync('/foo/test', { throwIfNoEntry: false });
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
   });
 
   it('throws EACCES when intermediate directory does not have sufficient permissions', () => {
@@ -55,6 +55,6 @@ describe('.statSync(...)', () => {
 
     expect(() => {
       vol.statSync('/foo/test');
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
   });
 });

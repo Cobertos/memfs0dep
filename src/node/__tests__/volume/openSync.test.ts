@@ -23,7 +23,7 @@ describe('openSync(path, mode[, flags])', () => {
         fs.chmodSync('/foo', 0o555); // rx across the board
         expect(() => {
           fs.openSync('/foo', intent);
-        }).toThrowError(/EACCES/);
+        }).toThrow(/EACCES/);
       });
     });
 
@@ -34,7 +34,7 @@ describe('openSync(path, mode[, flags])', () => {
         fs.chmodSync('/foo', 0o333); // wx across the board
         expect(() => {
           fs.openSync('/foo', intent);
-        }).toThrowError(/EACCES/);
+        }).toThrow(/EACCES/);
       });
     });
 
@@ -45,7 +45,7 @@ describe('openSync(path, mode[, flags])', () => {
         fs.chmodSync('/foo', 0o666); // wr across the board
         expect(() => {
           fs.openSync('/foo/bar', intent);
-        }).toThrowError(/EACCES/);
+        }).toThrow(/EACCES/);
       });
     });
 
@@ -56,7 +56,7 @@ describe('openSync(path, mode[, flags])', () => {
         fs.chmodSync('/', 0o666); // wr across the board
         expect(() => {
           fs.openSync('/foo/bar', intent);
-        }).toThrowError(/EACCES/);
+        }).toThrow(/EACCES/);
       });
     });
 
@@ -67,7 +67,7 @@ describe('openSync(path, mode[, flags])', () => {
         fs.mkdirSync('/foo', { mode: 0o666 }); // wr
         expect(() => {
           fs.openSync('/foo/bar', intent);
-        }).toThrowError(/EACCES/);
+        }).toThrow(/EACCES/);
       });
     });
   });

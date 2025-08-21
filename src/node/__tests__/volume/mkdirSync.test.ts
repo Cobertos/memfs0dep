@@ -75,7 +75,7 @@ describe('mkdirSync', () => {
       vol.chmodSync('/foo', perm);
       expect(() => {
         vol.mkdirSync(`/foo/bar`);
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
   });
 

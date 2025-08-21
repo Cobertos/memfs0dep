@@ -1,5 +1,41 @@
-import { fromStream } from '@jsonjoy.com/util/lib/streams/fromStream';
 import { createFs } from '../../../__tests__/util';
+
+// TODO: Remove these
+const concatList = (list: Uint8Array[]): Uint8Array => {
+  const length = list.length;
+  let size = 0,
+    offset = 0;
+  for (let i = 0; i < length; i++) size += list[i].length;
+  const res = new Uint8Array(size);
+  for (let i = 0; i < length; i++) {
+    const item = list[i];
+    res.set(item, offset);
+    offset += item.length;
+  }
+  return res;
+};
+
+const listToUint8 = (list: Uint8Array[]): Uint8Array => {
+  switch (list.length) {
+    case 0:
+      return new Uint8Array(0);
+    case 1:
+      return list[0];
+    default:
+      return concatList(list);
+  }
+};
+
+const fromStream = async (stream: ReadableStream<Uint8Array>): Promise<Uint8Array> => {
+  const reader = stream.getReader();
+  const chunks: Uint8Array[] = [];
+  while (true) {
+    const {done, value} = await reader.read();
+    if (done) break;
+    chunks.push(value);
+  }
+  return listToUint8(chunks);
+};
 
 describe('FileHandle', () => {
   describe('position tracking', () => {

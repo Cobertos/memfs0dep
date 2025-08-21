@@ -564,7 +564,7 @@ describe('volume', () => {
         expect(vol.fstatSync(fd).isSymbolicLink()).toBe(true);
         const buf = Buffer.alloc(10);
         const fn = () => vol.readSync(fd, buf, 0, 10, 0);
-        expect(fn).toThrowError('EPERM');
+        expect(fn).toThrow('EPERM');
       });
     });
     describe('.readv(fd, buffers, position, callback)', () => {
@@ -672,11 +672,11 @@ describe('volume', () => {
         const vol = new Volume();
         vol.mkdirSync('/test');
         const fn = () => vol.readFileSync('/test');
-        expect(fn).toThrowError('EISDIR');
+        expect(fn).toThrow('EISDIR');
       });
       it('Attempt to read a non-existing file should throw ENOENT', () => {
         const fn = () => vol.readFileSync('/pizza.txt');
-        expect(fn).toThrowError('ENOENT');
+        expect(fn).toThrow('ENOENT');
       });
     });
     describe('.readFile(path[, options], callback)', () => {
@@ -731,7 +731,7 @@ describe('volume', () => {
         const fd = vol.openSync('/link.txt', O_SYMLINK | O_RDWR);
         expect(vol.fstatSync(fd).isSymbolicLink()).toBe(true);
         const fn = () => vol.writeSync(fd, 'hello');
-        expect(fn).toThrowError('EBADF');
+        expect(fn).toThrow('EBADF');
       });
     });
     describe('.write(fd, buffer, offset, length, position, callback)', () => {
@@ -990,7 +990,7 @@ describe('volume', () => {
           expect(typeof stats.ctimeNs).toBe('bigint');
           expect(typeof stats.birthtimeNs).toBe('bigint');
         } else {
-          expect(() => vol.lstatSync('/dojo.js', { bigint: true })).toThrowError();
+          expect(() => vol.lstatSync('/dojo.js', { bigint: true })).toThrow(Error);
         }
       });
       it('Stats on symlink returns results about the symlink', () => {
@@ -1041,7 +1041,7 @@ describe('volume', () => {
           expect(typeof stats.ctimeNs).toBe('bigint');
           expect(typeof stats.birthtimeNs).toBe('bigint');
         } else {
-          expect(() => vol.statSync('/dojo.js', { bigint: true })).toThrowError();
+          expect(() => vol.statSync('/dojo.js', { bigint: true })).toThrow(Error);
         }
       });
       it('Stats on symlink returns results about the resolved file', () => {
@@ -1091,7 +1091,7 @@ describe('volume', () => {
           expect(typeof stats.ctimeNs).toBe('bigint');
           expect(typeof stats.birthtimeNs).toBe('bigint');
         } else {
-          expect(() => vol.fstatSync(fd, { bigint: true })).toThrowError();
+          expect(() => vol.fstatSync(fd, { bigint: true })).toThrow(Error);
         }
       });
       it('Returns stats about regular file for fd opened without O_SYMLINK', () => {
@@ -1368,8 +1368,8 @@ describe('volume', () => {
         try {
           vol.writeFileSync('/tmp/foo.js', writtenContent);
 
-          expect(mockCallback).toBeCalledTimes(2);
-          expect(mockCallback).toBeCalledWith('change', 'foo.js');
+          expect(mockCallback).toHaveBeenCalledTimes(2);
+          expect(mockCallback).toHaveBeenCalledWith('change', 'foo.js');
         } finally {
           watcher.close();
         }
@@ -1386,10 +1386,10 @@ describe('volume', () => {
         try {
           vol.writeFileSync('/tmp/foo-dir/foo.js', writtenContent);
 
-          expect(mockCallback).toBeCalledTimes(3);
-          expect(mockCallback).nthCalledWith(1, 'rename', 'foo.js');
-          expect(mockCallback).nthCalledWith(2, 'change', 'foo.js');
-          expect(mockCallback).nthCalledWith(3, 'change', 'foo.js');
+          expect(mockCallback).toHaveBeenCalledTimes(3);
+          expect(mockCallback).toHaveBeenNthCalledWith(1, 'rename', 'foo.js');
+          expect(mockCallback).toHaveBeenNthCalledWith(2, 'change', 'foo.js');
+          expect(mockCallback).toHaveBeenNthCalledWith(3, 'change', 'foo.js');
         } finally {
           watcher.close();
         }
@@ -1422,9 +1422,9 @@ describe('volume', () => {
 
           setTimeout(() => {
             watcher.close();
-            expect(listener).toBeCalledTimes(2);
-            expect(listener).nthCalledWith(1, 'rename', 'test/lol.txt');
-            expect(listener).nthCalledWith(2, 'rename', 'test/lol-2.txt');
+            expect(listener).toHaveBeenCalledTimes(2);
+            expect(listener).toHaveBeenNthCalledWith(1, 'rename', 'test/lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(2, 'rename', 'test/lol-2.txt');
             done();
           }, 10);
         });
@@ -1444,15 +1444,15 @@ describe('volume', () => {
 
           setTimeout(() => {
             watcher.close();
-            expect(listener).toBeCalledTimes(8);
-            expect(listener).nthCalledWith(1, 'change', 'lol.txt');
-            expect(listener).nthCalledWith(2, 'change', 'lol.txt');
-            expect(listener).nthCalledWith(3, 'rename', 'test/lol.txt');
-            expect(listener).nthCalledWith(4, 'change', 'test/lol.txt');
-            expect(listener).nthCalledWith(5, 'change', 'test/lol.txt');
-            expect(listener).nthCalledWith(6, 'rename', 'lol.txt');
-            expect(listener).nthCalledWith(7, 'rename', 'test/lol.txt');
-            expect(listener).nthCalledWith(8, 'rename', 'test/foo');
+            expect(listener).toHaveBeenCalledTimes(8);
+            expect(listener).toHaveBeenNthCalledWith(1, 'change', 'lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(2, 'change', 'lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(3, 'rename', 'test/lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(4, 'change', 'test/lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(5, 'change', 'test/lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(6, 'rename', 'lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(7, 'rename', 'test/lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(8, 'rename', 'test/foo');
             done();
           }, 10);
         });
@@ -1471,10 +1471,10 @@ describe('volume', () => {
 
           setTimeout(() => {
             watcher.close();
-            expect(listener).toBeCalledTimes(3);
-            expect(listener).nthCalledWith(1, 'change', 'lol.txt');
-            expect(listener).nthCalledWith(2, 'change', 'lol.txt');
-            expect(listener).nthCalledWith(3, 'rename', 'lol.txt');
+            expect(listener).toHaveBeenCalledTimes(3);
+            expect(listener).toHaveBeenNthCalledWith(1, 'change', 'lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(2, 'change', 'lol.txt');
+            expect(listener).toHaveBeenNthCalledWith(3, 'rename', 'lol.txt');
             done();
           }, 10);
         });

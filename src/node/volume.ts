@@ -16,7 +16,6 @@ import * as misc from './types/misc';
 import * as opts from './types/options';
 import { FsCallbackApi, WritevCallback } from './types/FsCallbackApi';
 import { FsPromises } from './FsPromises';
-import { ToTreeOptions, toTreeSync } from '../print';
 import { ERRSTR, FLAGS, MODE } from './constants';
 import {
   getDefaultOpts,
@@ -126,7 +125,7 @@ export function pathToSteps(path: PathLike): string[] {
   return filenameToSteps(pathToFilename(path));
 }
 
-export function dataToStr(data: TData, encoding: string = ENCODING_UTF8): string {
+export function dataToStr(data: TData, encoding: BufferEncoding = ENCODING_UTF8): string {
   if (Buffer.isBuffer(data)) return data.toString(encoding);
   else if (data instanceof Uint8Array) return bufferFrom(data).toString(encoding);
   else return String(data);
@@ -255,10 +254,6 @@ export class Volume implements FsCallbackApi, FsSynchronousApi {
       }
       callback(null, result);
     });
-  }
-
-  public toTree(opts: ToTreeOptions = { separator: <'/' | '\\'>sep }): string {
-    return toTreeSync(this, opts);
   }
 
   reset() {
@@ -546,7 +541,8 @@ export class Volume implements FsCallbackApi, FsSynchronousApi {
     const opts = getWriteFileOptions(options);
     const flagsNum = flagsToNumber(opts.flag);
     const modeNum = modeToNumber(opts.mode);
-    const buf = dataToBuffer(data, opts.encoding);
+    // TODO: Typing, Loose end from fork
+    const buf = dataToBuffer(data, opts.encoding as BufferEncoding);
     this._core.writeFile(id, buf, flagsNum, modeNum);
   };
 
@@ -566,7 +562,8 @@ export class Volume implements FsCallbackApi, FsSynchronousApi {
     const opts = getWriteFileOptions(options);
     const flagsNum = flagsToNumber(opts.flag);
     const modeNum = modeToNumber(opts.mode);
-    const buf = dataToBuffer(data, opts.encoding);
+    // TODO: Typing, Loose end from fork
+    const buf = dataToBuffer(data, opts.encoding as BufferEncoding);
     this.wrapAsync(this._core.writeFile, [id, buf, flagsNum, modeNum], cb);
   };
 
@@ -689,8 +686,10 @@ export class Volume implements FsCallbackApi, FsSynchronousApi {
     // Read directory contents
     const entries = this.readdirSync(src);
     for (const entry of entries) {
-      const srcItem = join(src, entry);
-      const destItem = join(dest, entry);
+      // TODO: Typing, loose end from fork, supposedly names can be encoded in
+      // buffer
+      const srcItem = join(src, entry as string);
+      const destItem = join(dest, entry as string);
       // Apply filter to each item
       if (options.filter && !options.filter(srcItem, destItem)) {
         continue;
@@ -1488,7 +1487,8 @@ export class Volume implements FsCallbackApi, FsSynchronousApi {
     const buffer = node.getBuffer();
     const type = options?.type || '';
 
-    return new Blob([buffer], { type });
+    // TODO: Loose end from fork, seems like tiny incompatibility (toStringTag literal return type)
+    return new Blob([buffer as any], { type });
   };
 
   public glob: FsCallbackApi['glob'] = (pattern: string, ...args: any[]) => {

@@ -1,13 +1,13 @@
-# memfs
+# memfs0dep
 
 [![][npm-badge]][npm-url]
 
-[npm-url]: https://www.npmjs.com/package/memfs
-[npm-badge]: https://img.shields.io/npm/v/memfs.svg
+<!-- [npm-url]: https://www.npmjs.com/package/memfs -->
+<!-- [npm-badge]: https://img.shields.io/npm/v/memfs.svg -->
 
-JavaScript file system utilities for Node.js and browser.
+JavaScript file system utilities for Node.js.
 
-## Install
+<!-- ## Install
 
 ```shell
 npm i memfs
@@ -42,7 +42,7 @@ npm i memfs
 [unionfs]: https://github.com/streamich/unionfs
 [fs-monkey]: https://github.com/streamich/fs-monkey
 [linkfs]: https://github.com/streamich/linkfs
-[spyfs]: https://github.com/streamich/spyfs
+[spyfs]: https://github.com/streamich/spyfs -->
 
 ## License
 

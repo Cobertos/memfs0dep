@@ -33,7 +33,7 @@ describe('rmSync', () => {
         '/foo.txt': 'content',
       });
 
-      expect(() => vol.rmSync('/bar.txt')).toThrowError(
+      expect(() => vol.rmSync('/bar.txt')).toThrow(
         new Error("ENOENT: no such file or directory, stat '/bar.txt'"),
       );
     });
@@ -53,7 +53,7 @@ describe('rmSync', () => {
         '/usr/bin/bash': '...',
       });
 
-      expect(() => vol.rmSync('/usr/bin')).toThrowError(
+      expect(() => vol.rmSync('/usr/bin')).toThrow(
         new Error('[ERR_FS_EISDIR]: Path is a directory: rm returned EISDIR (is a directory) /usr/bin'),
       );
     });
@@ -63,7 +63,7 @@ describe('rmSync', () => {
         '/usr/bin/bash': '...',
       });
 
-      expect(() => vol.rmSync('/usr/bin', { force: true })).toThrowError(
+      expect(() => vol.rmSync('/usr/bin', { force: true })).toThrow(
         new Error('[ERR_FS_EISDIR]: Path is a directory: rm returned EISDIR (is a directory) /usr/bin'),
       );
     });
@@ -126,7 +126,7 @@ describe('rmSync', () => {
       vol.chmodSync('/foo', perm);
       expect(() => {
         vol.rmSync('/foo/test');
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
   });
 

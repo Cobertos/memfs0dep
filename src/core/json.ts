@@ -23,7 +23,8 @@ export const flattenJSON = (nestedJSON: NestedDirectoryJSON): DirectoryJSON => {
         flatJSON[joinedPath] = contentOrNode;
       } else if (typeof contentOrNode === 'object' && contentOrNode !== null && Object.keys(contentOrNode).length > 0) {
         // empty directories need an explicit entry and therefore get handled in `else`, non-empty ones are implicitly considered
-        flatten(joinedPath, contentOrNode);
+        // TODO: Typing, Loose end from fork
+        flatten(joinedPath, contentOrNode as any);
       } else {
         // without this branch null, empty-object or non-object entries would not be handled in the same way
         // by both fromJSON() and fromNestedJSON()

@@ -9,9 +9,7 @@
     "sourceMap": true,
     "outDir": "lib",
     "declaration": true,
-    "skipLibCheck": true,
-    "noEmitHelpers": true,
-    "importHelpers": true
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["src/__tests__", "node_modules", "lib", "es6", "es2020", "esm", "docs", "README.md"],

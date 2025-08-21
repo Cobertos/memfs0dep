@@ -122,10 +122,10 @@ describe('readdirSync()', () => {
     vol.mkdirSync('/foo', { mode: 0o333 }); // wx across the board
     expect(() => {
       vol.readdirSync('/foo');
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
     // Check that it also throws with one of the subdirs of a recursive scan
     expect(() => {
       vol.readdirSync('/', { recursive: true });
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
   });
 });

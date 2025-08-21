@@ -83,7 +83,7 @@ describe('renameSync(fromPath, toPath)', () => {
       vol.chmodSync('/src', perm);
       expect(() => {
         vol.renameSync('/src/test', '/dest/fail');
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
   });
 
@@ -97,7 +97,7 @@ describe('renameSync(fromPath, toPath)', () => {
       vol.mkdirSync('/dest', { mode: perm });
       expect(() => {
         vol.renameSync('/src/test', '/dest/fail');
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
   });
 

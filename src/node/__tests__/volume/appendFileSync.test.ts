@@ -16,7 +16,7 @@ describe('appendFileSync(file, data, options)', () => {
     vol.chmodSync('/foo', 0o555); // rx across the board
     expect(() => {
       vol.appendFileSync('/foo', 'bar');
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
   });
   it('Appending throws EACCES if file does not exist and containing directory has insufficient permissions', () => {
     const perms = [
@@ -30,7 +30,7 @@ describe('appendFileSync(file, data, options)', () => {
       vol.mkdirSync('/foo', perm);
       expect(() => {
         vol.appendFileSync('/foo/test', 'bar');
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
   });
   it('Appending throws EACCES if intermediate directory has insufficient permissions', () => {
@@ -38,6 +38,6 @@ describe('appendFileSync(file, data, options)', () => {
     vol.chmodSync('/', 0o666); // rw
     expect(() => {
       vol.appendFileSync('/foo/test', 'bar');
-    }).toThrowError(/EACCES/);
+    }).toThrow(/EACCES/);
   });
 });

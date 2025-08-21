@@ -58,7 +58,7 @@ describe('copyFileSync(src, dest[, flags])', () => {
 
       expect(() => {
         vol.copyFileSync('/foo', '/bar', constants.COPYFILE_EXCL);
-      }).toThrowError(/EEXIST/);
+      }).toThrow(/EEXIST/);
 
       expect(vol.readFileSync('/foo', 'utf8')).toBe('hello world');
       expect(vol.readFileSync('/bar', 'utf8')).toBe('no hello');
@@ -86,7 +86,7 @@ describe('copyFileSync(src, dest[, flags])', () => {
 
       expect(() => {
         vol.copyFileSync('/foo', '/bar', constants.COPYFILE_FICLONE_FORCE);
-      }).toThrowError(/ENOSYS/);
+      }).toThrow(/ENOSYS/);
 
       expect(vol.readFileSync('/foo', 'utf8')).toBe('hello world');
     });
@@ -98,7 +98,7 @@ describe('copyFileSync(src, dest[, flags])', () => {
       vol.chmodSync('/foo', 0o333); // wx across the board
       expect(() => {
         vol.copyFileSync('/foo', '/bar');
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
 
     it('copying throws EACCES with insufficient permissions on the source directory', () => {
@@ -106,7 +106,7 @@ describe('copyFileSync(src, dest[, flags])', () => {
       vol.chmodSync('/foo', 0o666); // rw across the board
       expect(() => {
         vol.copyFileSync('/foo/bar', '/bar');
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
 
     it('copying throws EACCES with insufficient permissions on the destination directory', () => {
@@ -122,7 +122,7 @@ describe('copyFileSync(src, dest[, flags])', () => {
         vol.chmodSync('/bar', perm);
         expect(() => {
           vol.copyFileSync('/foo', '/bar/foo');
-        }).toThrowError(/EACCES/);
+        }).toThrow(/EACCES/);
       });
     });
     it('copying throws EACCES with insufficient permissions an intermediate directory', () => {
@@ -131,7 +131,7 @@ describe('copyFileSync(src, dest[, flags])', () => {
       vol.chmodSync('/', 0o666); // rw across the board
       expect(() => {
         vol.copyFileSync('/foo/test', '/bar/test');
-      }).toThrowError(/EACCES/);
+      }).toThrow(/EACCES/);
     });
   });
 });
